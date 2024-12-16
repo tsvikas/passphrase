@@ -22,13 +22,17 @@ def get_wordlist() -> list[str]:
 WORDLIST = list(get_wordlist().values())
 
 
+def get_passphrase(wordlist: list[str], k=6):
+    return random.choices(WORDLIST, k=k)
+
+
 def main():
     k = 7
     n = len(WORDLIST)
     entropy = math.log2(n**k)
     print(f"naive {entropy = } bits")
     for _ in range(8):
-        words = random.choices(WORDLIST, k=k)
+        words = get_passphrase(WORDLIST, k=k)
         print(" ".join(words))
 
 
