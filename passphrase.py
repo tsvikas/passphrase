@@ -30,8 +30,9 @@ def get_passphrase(wordlist: list[str], k=6):
 def main(k: int = 7, repeat: int = 10, hide_entropy: bool = False):
     n = len(WORDLIST)
     entropy = math.log2(n**k)
+    entropy10 = math.log10(n**k)
     if not hide_entropy:
-        print(f"naive {entropy = } bits")
+        print(f"naive {entropy = } bits, {entropy10:.2f} digits")
     for _ in range(repeat):
         words = get_passphrase(WORDLIST, k=k)
         print(" ".join(words))
