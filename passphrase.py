@@ -1,5 +1,6 @@
 import string
 import random
+import math
 
 import wordfreq
 
@@ -21,8 +22,12 @@ WORDLIST = list(get_wordlist().values())
 
 
 def main():
+    k = 7
+    n = len(WORDLIST)
+    entropy = math.log2(n**k)
+    print(f"naive {entropy = } bits")
     for _ in range(8):
-        words = random.choices(WORDLIST, k=6)
+        words = random.choices(WORDLIST, k=k)
         print(" ".join(words))
 
 
