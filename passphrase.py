@@ -3,8 +3,8 @@
 # /// script
 # requires-python = ">=3.9"
 # dependencies = [
-#     "typer",
-#     "wordfreq",
+#     "typer>=0.9.0",
+#     "wordfreq>=1.0",
 # ]
 # ///
 
