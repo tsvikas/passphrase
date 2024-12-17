@@ -119,6 +119,33 @@ def concat_words(words: list[str]) -> str:
     return "".join([word[:PREFIX_SIZE] for word in words])
 
 
+def print_entropy_data(choices: int) -> None:
+    """Print the entropy and time to crack for a number of choices."""
+    entropy = math.log2(choices)
+    entropy10 = math.log10(choices)
+    print(f"naive {entropy = :.1f} bits, {entropy10:.2f} digits")
+    for rate in [1, 1_000, 1_000_000, 1_000_000_000, 1_000_000_000_000]:
+        seconds_to_guess = choices / rate
+        last_size = seconds_to_guess
+        last_unit = "seconds"
+        for unit, unit_size in [
+            ("minutes", 60),
+            ("hours", 60),
+            ("days", 24),
+            ("months", 364.527 / 12),
+            ("years", 12),
+            ("thousand years", 1000),
+            ("million years", 1000),
+            ("billion years", 1000),
+            ("trillion years", 1000),
+        ]:
+            if last_size / unit_size < 1:
+                break
+            last_size /= unit_size
+            last_unit = unit
+        print(f"at {rate:>13} guesses/sec: {last_size:.3n} {last_unit}")
+
+
 def main(
     k: Annotated[
         int,
@@ -145,10 +172,9 @@ def main(
     """Generate multiple passphrases and optionally display entropy information."""
     n = len(WORDLIST)
     choices = n**k
-    entropy = math.log2(choices)
-    entropy10 = math.log10(choices)
     if not hide_entropy:
-        print(f"naive {entropy = :.1f} bits, {entropy10:.2f} digits\n")
+        print_entropy_data(choices)
+        print()
     for _ in range(repeat):
         words = get_passphrase(WORDLIST, k=k)
         if show_short_version:
