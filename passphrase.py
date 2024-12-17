@@ -6,6 +6,22 @@
 #     "wordfreq",
 # ]
 # ///
+"""
+Passphrase Generator with Memorable Word Selection.
+
+This module helps create secure passphrases.
+
+It draws from the most frequent words in the English language.
+This ensures memorability by choosing common, easily recognized words.
+
+It limits the wordlist to words with unique 3-letter prefixes.
+The unique prefix approach enables users to potentially shorten the passphrase
+while maintaining readability, as each prefix corresponds to a distinct word.
+
+Usage:
+    $ uv run passphrase_generator.py --help
+"""
+
 import math
 import secrets
 import string
