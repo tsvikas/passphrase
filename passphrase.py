@@ -7,7 +7,7 @@
 # ]
 # ///
 import math
-import random
+import secrets
 import string
 
 import typer
@@ -34,7 +34,7 @@ WORDLIST = list(get_wordlist().values())
 
 
 def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
-    return random.choices(wordlist, k=k)
+    return [secrets.choice(wordlist) for _ in range(k)]
 
 
 def main(k: int = 7, repeat: int = 10, *, hide_entropy: bool = False) -> None:
