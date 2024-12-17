@@ -79,8 +79,10 @@ def to_base_n(
     num: int, b: int, numerals: str = "0123456789abcdefghijklmnopqrstuvwxyz"
 ) -> str:
     """Convert a number to an arbitrery base."""
-    return ((num == 0) and numerals[0]) or (
-        to_base_n(num // b, b, numerals).lstrip(numerals[0]) + numerals[num % b]
+    return (
+        numerals[0]
+        if num == 0
+        else (to_base_n(num // b, b, numerals) + numerals[num % b]).lstrip(numerals[0])
     )
 
 
