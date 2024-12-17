@@ -42,3 +42,10 @@ repos:
         args: ["--select", "I001", "--fix"]
       - id: ruff-format
       - id: ruff
+  - repo: local
+    hooks:
+      - id: create-readme
+        name: create README.md
+        entry: /usr/bin/fish -c 'python3 -c "import ast; print(ast.get_docstring(ast.parse(open(\"passphrase.py\").read())))" > README.md'
+        language: system
+        files: ^passphrase\.py$
