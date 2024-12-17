@@ -58,7 +58,7 @@ PREFIX_SIZE = 3
 WORDLIST_SIZE = 1024
 
 
-def get_wordlist() -> list[str]:
+def get_wordlist(wordlist_size: int = WORDLIST_SIZE) -> list[str]:
     """
     Generate a list of unique words from the English language.
 
@@ -70,13 +70,13 @@ def get_wordlist() -> list[str]:
             continue
         if len(word) >= PREFIX_SIZE and word[:PREFIX_SIZE] not in short_words:
             short_words[word[:PREFIX_SIZE]] = word
-            if len(short_words) >= WORDLIST_SIZE:
+            if len(short_words) >= wordlist_size:
                 break
-    return short_words
+    return short_words.values()
 
 
 # Global wordlist for passphrase generation
-WORDLIST = sorted(get_wordlist().values())
+WORDLIST = sorted(get_wordlist())
 
 
 def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
