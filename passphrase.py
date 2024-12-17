@@ -71,7 +71,6 @@ import typer
 import wordfreq
 
 PREFIX_SIZE = 3
-WORDLIST_SIZE = 1024
 RATES = {
     "online_throttling": 0.1,
     "keepass_default_decryption_time": 1,
@@ -84,7 +83,7 @@ RATES = {
 }
 
 
-def get_wordlist(wordlist_size: int = WORDLIST_SIZE) -> list[str]:
+def get_wordlist(wordlist_size: int) -> list[str]:
     """
     Generate a list of unique words from the English language.
 
@@ -123,10 +122,6 @@ def print_diceware(dice: int = 6, rolls: int = 4) -> None:
         numerals = "1234567890ET"[:dice]
         number = to_base_n(i, dice, numerals).rjust(rolls, numerals[0])
         print(number, word)
-
-
-# Global wordlist for passphrase generation
-WORDLIST = sorted(get_wordlist())
 
 
 def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
@@ -199,15 +194,23 @@ def main(
             help="Show the concatenated short version of the passphrase",
         ),
     ] = False,
+    wordlist_bits: Annotated[
+        int,
+        typer.Option(
+            "-b",
+            "--wordlist_bits",
+            help="Size of the wordlist, in bits",
+        ),
+    ] = 10,
 ) -> None:
     """Generate multiple passphrases and optionally display entropy information."""
-    n = len(WORDLIST)
-    choices = n**k
+    wordlist = sorted(get_wordlist(2**wordlist_bits))
+    choices = len(wordlist) ** k
     if show_entropy:
         print_entropy_data(choices)
         print()
     for _ in range(repeat):
-        words = get_passphrase(WORDLIST, k=k)
+        words = get_passphrase(wordlist, k=k)
         if show_short_version:
             print(concat_words(words), end="\t")
         print(" ".join(words))
