@@ -42,7 +42,7 @@ def main(k: int = 7, repeat: int = 10, hide_entropy: bool = False):
     entropy = math.log2(choices)
     entropy10 = math.log10(choices)
     if not hide_entropy:
-        print(f"naive {entropy = } bits, {entropy10:.2f} digits")
+        print(f"naive {entropy = } bits, {entropy10:.2f} digits\n")
     for _ in range(repeat):
         words = get_passphrase(WORDLIST, k=k)
         print(" ".join(words))
