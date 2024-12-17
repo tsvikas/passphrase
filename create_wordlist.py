@@ -14,6 +14,7 @@ import wordfreq
 
 
 def filter_by_prefix(wordlist: list[str], prefix_size: int) -> list[str]:
+    """Filter wordlist to only have distinct prefixes."""
     output: dict[str, str] = {}
     for word in wordlist:
         if len(word) >= prefix_size and word[:prefix_size] not in output:
@@ -22,6 +23,7 @@ def filter_by_prefix(wordlist: list[str], prefix_size: int) -> list[str]:
 
 
 def write_wordlist(fn: Path, wordlist: list[str]) -> None:
+    """Write the wordlist to a file."""
     fn.write_text("\n".join(sorted(wordlist)) + "\n")
 
 
