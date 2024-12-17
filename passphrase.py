@@ -169,7 +169,11 @@ def main(
     ] = False,
     show_short_version: Annotated[
         bool,
-        typer.Option(help="Show the concatenated short version of the passphrase"),
+        typer.Option(
+            "--short",
+            "-s",
+            help="Show the concatenated short version of the passphrase",
+        ),
     ] = False,
 ) -> None:
     """Generate multiple passphrases and optionally display entropy information."""
