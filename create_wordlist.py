@@ -54,7 +54,9 @@ if __name__ == "__main__":
         eff_large_wordlist, key=lambda w: -wordfreq.word_frequency(w, "en")
     )
     write_wordlist(
-        Path("eff_large_common_wordlist.txt"), eff_large_wordlist[:output_size]
+        Path("output/eff_large_common_wordlist.txt"), eff_large_wordlist[:output_size]
     )
     prefix_wordlist = filter_by_prefix(eff_large_wordlist, 3)
-    write_wordlist(Path("eff_large_prefix_wordlist.txt"), prefix_wordlist[:output_size])
+    write_wordlist(
+        Path("output/eff_large_prefix_wordlist.txt"), prefix_wordlist[:output_size]
+    )
