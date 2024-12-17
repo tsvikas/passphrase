@@ -15,6 +15,11 @@ import wordfreq
 
 
 def get_wordlist() -> list[str]:
+    """
+    Generate a list of unique words from the English language.
+
+    Words have unique 3-letter prefixes
+    """
     prefix_size = 3
     wordlist_size = 1024
     short_words = {}
@@ -28,14 +33,17 @@ def get_wordlist() -> list[str]:
     return short_words
 
 
+# Global wordlist for passphrase generation
 WORDLIST = sorted(get_wordlist().values())
 
 
 def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
+    """Generate a random passphrase by selecting k words from the wordlist."""
     return [secrets.choice(wordlist) for _ in range(k)]
 
 
 def main(k: int = 7, repeat: int = 10, *, hide_entropy: bool = False) -> None:
+    """Generate multiple passphrases and optionally display entropy information."""
     n = len(WORDLIST)
     choices = n**k
     entropy = math.log2(choices)
