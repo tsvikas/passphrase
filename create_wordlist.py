@@ -21,6 +21,10 @@ def filter_by_prefix(wordlist: list[str], prefix_size: int) -> list[str]:
     return list(output.values())
 
 
+def write_wordlist(fn: Path, wordlist: list[str]) -> None:
+    fn.write_text("\n".join(sorted(wordlist)) + "\n")
+
+
 if __name__ == "__main__":
     output_fn = Path("short_wordlist.txt")
     output_size = 6**4
@@ -41,5 +45,8 @@ if __name__ == "__main__":
     eff_large_wordlist = sorted(
         eff_large_wordlist, key=lambda w: -wordfreq.word_frequency(w, "en")
     )
-    short_wordlist = filter_by_prefix(eff_large_wordlist, 3)
-    output_fn.write_text("\n".join(sorted(short_wordlist[:output_size])) + "\n")
+    write_wordlist(
+        Path("eff_large_common_wordlist.txt"), eff_large_wordlist[:output_size]
+    )
+    prefix_wordlist = filter_by_prefix(eff_large_wordlist, 3)
+    write_wordlist(Path("eff_large_prefix_wordlist.txt"), prefix_wordlist[:output_size])
