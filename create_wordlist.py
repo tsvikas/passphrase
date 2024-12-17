@@ -6,6 +6,12 @@
 #     "wordfreq",
 # ]
 # ///
+"""
+I don't like the
+[method](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases)
+that is used to create EFF short wordlist, so i created a new one.
+"""
+
 import string
 from pathlib import Path
 
