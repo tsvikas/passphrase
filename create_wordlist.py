@@ -16,8 +16,6 @@ import wordfreq
 def filter_by_prefix(wordlist: list[str], prefix_size: int) -> list[str]:
     output: dict[str, str] = {}
     for word in wordlist:
-        if not set(word).issubset(string.ascii_lowercase):
-            continue
         if len(word) >= prefix_size and word[:prefix_size] not in output:
             output[word[:prefix_size]] = word
     return list(output.values())
@@ -34,6 +32,11 @@ if __name__ == "__main__":
     )
     eff_large_wordlist = [
         line.split("\t")[1] for line in eff_large_fn.read_text().splitlines()
+    ]
+    eff_large_wordlist = [
+        word
+        for word in eff_large_wordlist
+        if set(word).issubset(string.ascii_lowercase)
     ]
     eff_large_wordlist = sorted(
         eff_large_wordlist, key=lambda w: -wordfreq.word_frequency(w, "en")
