@@ -47,6 +47,6 @@ repos:
     hooks:
       - id: create-readme
         name: create README.md
-        entry: /usr/bin/fish -c 'python3 -c "import ast; print(ast.get_docstring(ast.parse(open(\"passphrase.py\").read())))" > README.md'
+        entry: python3 -c "import ast; from pathlib import Path; Path(\"README.md\").write_text(ast.get_docstring(ast.parse(Path(\"passphrase.py\").read_text())).strip()+\"\\n\")"
         language: system
         files: ^passphrase\.py$
