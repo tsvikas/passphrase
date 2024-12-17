@@ -69,9 +69,9 @@ RATES = {
     "online_throttling": 0.1,
     "keepass_default_decryption_time": 1,
     "online_no_throttling": 10,
-    "rate_from_xkcd_comic": 1000,
+    # "rate_from_xkcd_comic": 1000,
     "offline_slow_hashing": int(1e4),
-    "unixninja_rate": 46_943_045,
+    "offline_medium_hashing": int((1e4 * 1e10) ** 0.5),
     "offline_fast_hashing": int(1e10),
     "kraxx": int(1.4e12),
 }
