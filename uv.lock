@@ -228,8 +228,8 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "typer", specifier = ">=0.15.1" },
-    { name = "wordfreq", specifier = ">=3.1.1" },
+    { name = "typer", specifier = ">=0.9.0" },
+    { name = "wordfreq", specifier = ">=1.0" },
 ]
 
 [[package]]
