@@ -61,12 +61,21 @@ def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
 
 def main(
     k: Annotated[
-        int, typer.Option(help="Number of words in each generated passphrase")
+        int,
+        typer.Option(
+            "-k", "--num-wrods", help="Number of words in each generated passphrase"
+        ),
     ] = 7,
-    repeat: Annotated[int, typer.Option(help="Number of passphrases to generate")] = 10,
+    repeat: Annotated[
+        int,
+        typer.Option("-r", "--num-phrases", help="Number of passphrases to generate"),
+    ] = 10,
     *,
     hide_entropy: Annotated[
-        bool, typer.Option(help="Hide entropy calculation information")
+        bool,
+        typer.Option(
+            "--hide-entropy/--show-entropy", help="Hide entropy calculation information"
+        ),
     ] = False,
 ) -> None:
     """Generate multiple passphrases and optionally display entropy information."""
