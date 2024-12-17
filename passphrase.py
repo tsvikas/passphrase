@@ -37,7 +37,7 @@ def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
     return random.choices(wordlist, k=k)
 
 
-def main(k: int = 7, repeat: int = 10, hide_entropy: bool = False):
+def main(k: int = 7, repeat: int = 10, *, hide_entropy: bool = False) -> None:
     n = len(WORDLIST)
     choices = n**k
     entropy = math.log2(choices)
