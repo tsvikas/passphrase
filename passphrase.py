@@ -19,7 +19,8 @@ def get_wordlist() -> list[str]:
     wordlist_size = 1024
     short_words = {}
     for word in wordfreq.iter_wordlist("en"):
-        assert word == word.lower()
+        if word != word.lower():
+            continue
         if not set(word).issubset(string.ascii_lowercase):
             continue
         if len(word) >= prefix_size and word[:prefix_size] not in short_words:
