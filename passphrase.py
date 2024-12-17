@@ -51,8 +51,15 @@ which contains many obscure or hard to spell words.
 Note that this means that the wordlist is shorter, and a longer phrase is
 needed to reach the same entropy.
 
-Usage:
+# Usage
+If you have [uv installed](https://docs.astral.sh/uv/getting-started/installation/):
+    $ ./passphrase_generator.py --help
+
+Or:
     $ uv run passphrase_generator.py --help
+
+Alternatively, install the dependencies and run:
+    $ python passphrase_generator.py --help
 """
 
 import math
