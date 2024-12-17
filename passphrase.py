@@ -159,7 +159,8 @@ def print_entropy_data(choices: int) -> None:
             last_size /= unit_size
             last_unit = unit
         print(
-            f"at {rate:>13} guesses/sec {rate_name_justified}: {last_size:.3n} {last_unit}"
+            f"at {rate:>13} guesses/sec {rate_name_justified}: "
+            f"{last_size:.3n} {last_unit}"
         )
 
 
