@@ -59,6 +59,12 @@ def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
     return [secrets.choice(wordlist) for _ in range(k)]
 
 
+def concat_words(words: list[str]) -> str:
+    """Concat word prefixes in passphrase."""
+    prefix_size = 3
+    return "".join([word[:prefix_size] for word in words])
+
+
 def main(
     k: Annotated[
         int,
@@ -77,6 +83,10 @@ def main(
             "--hide-entropy/--show-entropy", help="Hide entropy calculation information"
         ),
     ] = False,
+    show_short_version: Annotated[
+        bool,
+        typer.Option(help="Show the concatenated short version of the passphrase"),
+    ] = False,
 ) -> None:
     """Generate multiple passphrases and optionally display entropy information."""
     n = len(WORDLIST)
@@ -87,6 +97,8 @@ def main(
         print(f"naive {entropy = } bits, {entropy10:.2f} digits\n")
     for _ in range(repeat):
         words = get_passphrase(WORDLIST, k=k)
+        if show_short_version:
+            print(concat_words(words), end="\t")
         print(" ".join(words))
 
 
