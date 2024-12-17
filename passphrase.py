@@ -30,7 +30,7 @@ def get_wordlist() -> list[str]:
 WORDLIST = list(get_wordlist().values())
 
 
-def get_passphrase(wordlist: list[str], k=6):
+def get_passphrase(wordlist: list[str], k: int = 6):
     return random.choices(WORDLIST, k=k)
 
 
