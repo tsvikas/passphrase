@@ -12,6 +12,7 @@ I don't like the
 that is used to create EFF short wordlist, so i created a new one.
 """
 
+import difflib
 import string
 from pathlib import Path
 
@@ -36,6 +37,7 @@ def write_wordlist(fn: Path, wordlist: list[str]) -> None:
 if __name__ == "__main__":
     output_fn = Path("short_wordlist.txt")
     output_size = 6**4
+    max_similarity = 0.75
     # load eff_large_fn
     eff_large_fn = Path(
         pooch.retrieve(
@@ -64,4 +66,14 @@ if __name__ == "__main__":
     prefix_wordlist = filter_by_prefix(eff_large_wordlist, 3)
     write_wordlist(
         Path("output/eff_short_prefix_wordlist.txt"), prefix_wordlist[:output_size]
+    )
+    # filter by distance
+    distinct_wordlist = []
+    for word in eff_large_wordlist:
+        similar = difflib.get_close_matches(word, distinct_wordlist, 1, max_similarity)
+        if len(similar) > 0:
+            continue
+        distinct_wordlist.append(word)
+    write_wordlist(
+        Path("output/eff_short_distinct_wordlist.txt"), distinct_wordlist[:output_size]
     )
