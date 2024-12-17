@@ -30,6 +30,9 @@ from typing import Annotated
 import typer
 import wordfreq
 
+PREFIX_SIZE = 3
+WORDLIST_SIZE = 1024
+
 
 def get_wordlist() -> list[str]:
     """
@@ -37,15 +40,13 @@ def get_wordlist() -> list[str]:
 
     Words have unique 3-letter prefixes
     """
-    prefix_size = 3
-    wordlist_size = 1024
     short_words = {}
     for word in wordfreq.iter_wordlist("en"):
         if not set(word).issubset(string.ascii_lowercase):
             continue
-        if len(word) >= prefix_size and word[:prefix_size] not in short_words:
-            short_words[word[:prefix_size]] = word
-            if len(short_words) >= wordlist_size:
+        if len(word) >= PREFIX_SIZE and word[:PREFIX_SIZE] not in short_words:
+            short_words[word[:PREFIX_SIZE]] = word
+            if len(short_words) >= WORDLIST_SIZE:
                 break
     return short_words
 
@@ -61,8 +62,7 @@ def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
 
 def concat_words(words: list[str]) -> str:
     """Concat word prefixes in passphrase."""
-    prefix_size = 3
-    return "".join([word[:prefix_size] for word in words])
+    return "".join([word[:PREFIX_SIZE] for word in words])
 
 
 def main(
