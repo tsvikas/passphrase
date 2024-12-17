@@ -6,9 +6,9 @@
 #     "wordfreq",
 # ]
 # ///
-import string
-import random
 import math
+import random
+import string
 
 import typer
 import wordfreq
