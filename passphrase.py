@@ -65,6 +65,16 @@ import wordfreq
 
 PREFIX_SIZE = 3
 WORDLIST_SIZE = 1024
+RATES = {
+    "online_throttling": 0.1,
+    "keepass_default_decryption_time": 1,
+    "online_no_throttling": 10,
+    "rate_from_xkcd_comic": 1000,
+    "offline_slow_hashing": int(1e4),
+    "unixninja_rate": 46_943_045,
+    "offline_fast_hashing": int(1e10),
+    "kraxx": int(1.4e12),
+}
 
 
 def get_wordlist(wordlist_size: int = WORDLIST_SIZE) -> list[str]:
@@ -127,7 +137,9 @@ def print_entropy_data(choices: int) -> None:
     entropy = math.log2(choices)
     entropy10 = math.log10(choices)
     print(f"naive {entropy = :.1f} bits, {entropy10:.2f} digits")
-    for rate in [1, 1_000, 1_000_000, 1_000_000_000, 1_000_000_000_000]:
+    rate_name_len = max(len(name) for name in RATES)
+    for rate_name, rate in RATES.items():
+        rate_name_justified = f"[{rate_name}]".ljust(rate_name_len + 2)
         seconds_to_guess = choices / rate
         last_size = seconds_to_guess
         last_unit = "seconds"
@@ -146,7 +158,9 @@ def print_entropy_data(choices: int) -> None:
                 break
             last_size /= unit_size
             last_unit = unit
-        print(f"at {rate:>13} guesses/sec: {last_size:.3n} {last_unit}")
+        print(
+            f"at {rate:>13} guesses/sec {rate_name_justified}: {last_size:.3n} {last_unit}"
+        )
 
 
 def main(
