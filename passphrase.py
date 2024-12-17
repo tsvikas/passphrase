@@ -30,7 +30,7 @@ def get_wordlist() -> list[str]:
     return short_words
 
 
-WORDLIST = list(get_wordlist().values())
+WORDLIST = sorted(get_wordlist().values())
 
 
 def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
