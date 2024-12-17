@@ -25,6 +25,7 @@ Usage:
 import math
 import secrets
 import string
+from typing import Annotated
 
 import typer
 import wordfreq
@@ -58,7 +59,16 @@ def get_passphrase(wordlist: list[str], k: int = 6) -> list[str]:
     return [secrets.choice(wordlist) for _ in range(k)]
 
 
-def main(k: int = 7, repeat: int = 10, *, hide_entropy: bool = False) -> None:
+def main(
+    k: Annotated[
+        int, typer.Option(help="Number of words in each generated passphrase")
+    ] = 7,
+    repeat: Annotated[int, typer.Option(help="Number of passphrases to generate")] = 10,
+    *,
+    hide_entropy: Annotated[
+        bool, typer.Option(help="Hide entropy calculation information")
+    ] = False,
+) -> None:
     """Generate multiple passphrases and optionally display entropy information."""
     n = len(WORDLIST)
     choices = n**k
