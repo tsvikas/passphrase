@@ -171,27 +171,27 @@ def main(
     k: Annotated[
         int,
         typer.Option(
-            "-k", "--num-wrods", help="Number of words in each generated passphrase"
+            "-w", "--words", help="Number of words in each generated passphrase"
         ),
     ] = 7,
     repeat: Annotated[
         int,
-        typer.Option("-r", "--num-phrases", help="Number of passphrases to generate"),
+        typer.Option("-p", "--phrases", help="Number of passphrases to generate"),
     ] = 8,
     *,
     show_entropy: Annotated[
         bool,
         typer.Option(
-            "-e/-E",
             "--entropy/--no-entropy",
+            "-e/-E",
             help="Hide entropy calculation information",
         ),
     ] = True,
     show_short_version: Annotated[
         bool,
         typer.Option(
-            "-s/-S",
             "--short/--no-short",
+            "-s/-S",
             help="Show the concatenated short version of the passphrase",
         ),
     ] = False,
