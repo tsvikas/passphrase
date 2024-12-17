@@ -97,7 +97,11 @@ def to_base_n(
 
 
 def print_diceware(dice: int = 6, rolls: int = 4) -> None:
-    """Print a table for rolling a random word."""
+    """
+    Print a table for manually rolling a random word.
+
+    This is not the exact wordlist used for this script.
+    """
     wordlist = sorted(get_wordlist(dice**rolls))
     for i, word in enumerate(wordlist):
         numerals = "1234567890ET"[:dice]
