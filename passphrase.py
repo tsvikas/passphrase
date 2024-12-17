@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "typer",
+#     "wordfreq",
+# ]
+# ///
 import string
 import random
 import math
