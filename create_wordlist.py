@@ -36,6 +36,7 @@ def write_wordlist(fn: Path, wordlist: list[str]) -> None:
 if __name__ == "__main__":
     output_fn = Path("short_wordlist.txt")
     output_size = 6**4
+    # load eff_large_fn
     eff_large_fn = Path(
         pooch.retrieve(
             url="https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt",
@@ -45,18 +46,22 @@ if __name__ == "__main__":
     eff_large_wordlist = [
         line.split("\t")[1] for line in eff_large_fn.read_text().splitlines()
     ]
+    # filter non-lowercase
     eff_large_wordlist = [
         word
         for word in eff_large_wordlist
         if set(word).issubset(string.ascii_lowercase)
     ]
+    # sort by freq
     eff_large_wordlist = sorted(
         eff_large_wordlist, key=lambda w: -wordfreq.word_frequency(w, "en")
     )
+    write_wordlist(Path("output/eff_large_common_wordlist.txt"), eff_large_wordlist)
     write_wordlist(
-        Path("output/eff_large_common_wordlist.txt"), eff_large_wordlist[:output_size]
+        Path("output/eff_short_common_wordlist.txt"), eff_large_wordlist[:output_size]
     )
+    # filter by prefix
     prefix_wordlist = filter_by_prefix(eff_large_wordlist, 3)
     write_wordlist(
-        Path("output/eff_large_prefix_wordlist.txt"), prefix_wordlist[:output_size]
+        Path("output/eff_short_prefix_wordlist.txt"), prefix_wordlist[:output_size]
     )
