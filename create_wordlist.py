@@ -30,7 +30,7 @@ def filter_by_prefix(wordlist: list[str], prefix_size: int) -> list[str]:
 
 def write_wordlist(fn: Path, wordlist: list[str]) -> None:
     """Write the wordlist to a file."""
-    fn.write_text("\n".join(sorted(wordlist)) + "\n")
+    fn.write_text("\n".join(wordlist) + "\n")
 
 
 if __name__ == "__main__":
