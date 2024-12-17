@@ -177,7 +177,7 @@ def main(
     repeat: Annotated[
         int,
         typer.Option("-r", "--num-phrases", help="Number of passphrases to generate"),
-    ] = 10,
+    ] = 8,
     *,
     show_entropy: Annotated[
         bool,
