@@ -97,8 +97,11 @@ def main(s: str) -> None:
         base, exp = s.split("**")
         if "*" in exp:
             a, b = exp.split("*")
-            exp = int(a) * int(b)
-        n = int(base) ** int(exp)
+            n = int(base) ** (int(a) * int(b))
+        elif "." in exp:
+            n = int(int(base) ** float(exp))
+        else:
+            n = int(base) ** int(exp)
     else:
         n = int(s)
     print_entropy_data(n)
