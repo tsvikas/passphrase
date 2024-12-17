@@ -75,6 +75,24 @@ def get_wordlist(wordlist_size: int = WORDLIST_SIZE) -> list[str]:
     return short_words.values()
 
 
+def to_base_n(
+    num: int, b: int, numerals: str = "0123456789abcdefghijklmnopqrstuvwxyz"
+) -> str:
+    """Convert a number to an arbitrery base."""
+    return ((num == 0) and numerals[0]) or (
+        to_base_n(num // b, b, numerals).lstrip(numerals[0]) + numerals[num % b]
+    )
+
+
+def print_diceware(dice: int = 6, rolls: int = 4) -> None:
+    """Print a table for rolling a random word."""
+    wordlist = sorted(get_wordlist(dice**rolls))
+    for i, word in enumerate(wordlist):
+        numerals = "1234567890ET"[:dice]
+        number = to_base_n(i, dice, numerals).rjust(rolls, numerals[0])
+        print(number, word)
+
+
 # Global wordlist for passphrase generation
 WORDLIST = sorted(get_wordlist())
 
