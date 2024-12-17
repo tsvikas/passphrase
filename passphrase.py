@@ -183,17 +183,19 @@ def main(
         typer.Option("-r", "--num-phrases", help="Number of passphrases to generate"),
     ] = 10,
     *,
-    hide_entropy: Annotated[
+    show_entropy: Annotated[
         bool,
         typer.Option(
-            "--hide-entropy/--show-entropy", help="Hide entropy calculation information"
+            "-e/-E",
+            "--entropy/--no-entropy",
+            help="Hide entropy calculation information",
         ),
-    ] = False,
+    ] = True,
     show_short_version: Annotated[
         bool,
         typer.Option(
-            "--short",
-            "-s",
+            "-s/-S",
+            "--short/--no-short",
             help="Show the concatenated short version of the passphrase",
         ),
     ] = False,
@@ -201,7 +203,7 @@ def main(
     """Generate multiple passphrases and optionally display entropy information."""
     n = len(WORDLIST)
     choices = n**k
-    if not hide_entropy:
+    if show_entropy:
         print_entropy_data(choices)
         print()
     for _ in range(repeat):
