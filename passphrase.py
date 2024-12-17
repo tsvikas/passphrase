@@ -118,7 +118,7 @@ def main(
     entropy = math.log2(choices)
     entropy10 = math.log10(choices)
     if not hide_entropy:
-        print(f"naive {entropy = } bits, {entropy10:.2f} digits\n")
+        print(f"naive {entropy = :.1f} bits, {entropy10:.2f} digits\n")
     for _ in range(repeat):
         words = get_passphrase(WORDLIST, k=k)
         if show_short_version:
