@@ -3,6 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "pooch",
+#     "tqdm",
 #     "wordfreq",
 # ]
 # ///
@@ -12,11 +13,13 @@ alternative to the [method][eff-method] that is used to create EFF short wordlis
 [eff-method]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
 """
 
+import csv
 import difflib
 import string
 from pathlib import Path
 
 import pooch
+import tqdm
 import wordfreq
 
 
@@ -35,7 +38,6 @@ def write_wordlist(fn: Path, wordlist: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    output_fn = Path("short_wordlist.txt")
     output_size = 6**4
     max_similarity = 0.75
     # load eff_large_fn
@@ -69,7 +71,7 @@ if __name__ == "__main__":
     )
     # filter by distance
     distinct_wordlist = []
-    for word in eff_large_wordlist:
+    for word in tqdm.tqdm(eff_large_wordlist):
         similar = difflib.get_close_matches(word, distinct_wordlist, 1, max_similarity)
         if len(similar) > 0:
             continue
@@ -77,3 +79,19 @@ if __name__ == "__main__":
     write_wordlist(
         Path("output/eff_short_distinct_wordlist.txt"), distinct_wordlist[:output_size]
     )
+    # create a csv of all files
+    common = {w: i for i, w in enumerate(eff_large_wordlist)}
+    prefix = {w: i for i, w in enumerate(prefix_wordlist)}
+    distinct = {w: i for i, w in enumerate(distinct_wordlist)}
+    with Path("output/all_lists.csv").open("w", newline="", encoding="utf8") as csvfile:
+        writer = csv.writer(csvfile, lineterminator="\n")
+        writer.writerow(["word", "common", "prefix", "distinct"])
+        for word in sorted(eff_large_wordlist):
+            writer.writerow(
+                [
+                    word,
+                    common.get(word, -1),
+                    prefix.get(word, -1),
+                    distinct.get(word, -1),
+                ]
+            )
