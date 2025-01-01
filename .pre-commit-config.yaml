@@ -50,3 +50,6 @@ repos:
         entry: uv run create_wordlist.py
         language: system
         files: ^create_wordlist\.py$
+ci:
+  skip:
+    - create-wordlists
