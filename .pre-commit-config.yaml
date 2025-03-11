@@ -20,7 +20,6 @@ repos:
       - id: trailing-whitespace
       # python
       - id: check-ast
-        fail_fast: true
       - id: check-docstring-first
       - id: debug-statements
       - id: requirements-txt-fixer
