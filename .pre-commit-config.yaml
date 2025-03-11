@@ -82,7 +82,7 @@ repos:
       - id: ruff
         alias: ruff-isort
         name: ruff isort
-        args: ["--select", "I001", "--fix"]
+        args: [--select, I001, --fix]
       - id: ruff-format
       - id: ruff
         alias: ruff-check
