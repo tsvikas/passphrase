@@ -70,7 +70,7 @@ if __name__ == "__main__":
         Path("output/eff_short_prefix_wordlist.txt"), prefix_wordlist[:output_size]
     )
     # filter by distance
-    distinct_wordlist = []
+    distinct_wordlist: list[str] = []
     for word in tqdm.tqdm(eff_large_wordlist):
         similar = difflib.get_close_matches(word, distinct_wordlist, 1, max_similarity)
         if len(similar) > 0:

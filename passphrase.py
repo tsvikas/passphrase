@@ -75,7 +75,7 @@ def get_wordlist(wordlist_size: int) -> list[str]:
             short_words[word[:PREFIX_SIZE]] = word
             if len(short_words) >= wordlist_size:
                 break
-    return short_words.values()
+    return list(short_words.values())
 
 
 def to_base_n(
