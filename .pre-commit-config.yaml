@@ -54,3 +54,4 @@ repos:
 ci:
   skip:
     - create-wordlists
+  autoupdate_schedule: quarterly
