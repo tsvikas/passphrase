@@ -7,7 +7,7 @@
 # ///
 
 """
-Calculate entropy of choosing repeatly from a list.
+Calculate entropy of choosing repeatedly from a list.
 
 # Usage
 If you have [uv installed](https://docs.astral.sh/uv/getting-started/installation/):
