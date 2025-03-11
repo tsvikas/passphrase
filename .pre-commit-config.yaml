@@ -1,4 +1,9 @@
 exclude: "^output/"
+ci:
+  skip:
+    - create-wordlists
+  autoupdate_schedule: quarterly
+
 repos:
   # General hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -98,7 +103,3 @@ repos:
         entry: uv run create_wordlist.py
         language: system
         files: ^create_wordlist\.py$
-ci:
-  skip:
-    - create-wordlists
-  autoupdate_schedule: quarterly
