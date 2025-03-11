@@ -1,4 +1,6 @@
-exclude: "^output/"
+exclude: "\
+  ^output/|\
+  ^$"
 ci:
   skip:
     - create-wordlists
