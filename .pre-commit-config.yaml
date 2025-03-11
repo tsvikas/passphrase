@@ -11,10 +11,13 @@ repos:
       # git
       - id: check-added-large-files
       - id: check-merge-conflict
+      - id: check-vcs-permalinks
+      - id: forbid-submodules
       # secrets
       - id: detect-private-key
       # text in files
       - id: end-of-file-fixer
+      - id: fix-byte-order-marker
       - id: mixed-line-ending
         args: [--fix=lf]
       - id: trailing-whitespace
@@ -22,9 +25,12 @@ repos:
       - id: check-ast
       - id: check-docstring-first
       - id: debug-statements
+      - id: name-tests-test
+        args: [--pytest-test-first]
       - id: requirements-txt-fixer
       # symlinks
       - id: check-symlinks
+      - id: destroyed-symlinks
       # filetypes
       - id: check-json
       - id: check-toml
