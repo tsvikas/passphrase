@@ -41,6 +41,7 @@ Alternatively, install the dependencies and run:
     $ python passphrase_generator.py --help
 """
 
+import difflib
 import math
 import secrets
 import string
@@ -61,21 +62,35 @@ RATES = {
 }
 
 
-def get_wordlist(wordlist_size: int) -> list[str]:
+def get_wordlist(wordlist_size: int, unique_prefix: bool) -> list[str]:
     """
     Generate a list of unique words from the English language.
 
     Words have unique 3-letter prefixes
     """
-    short_words = {}
+    if unique_prefix:
+        short_words = {}
+        for word in wordfreq.iter_wordlist("en"):
+            if not set(word).issubset(string.ascii_lowercase):
+                continue
+            if len(word) >= PREFIX_SIZE and word[:PREFIX_SIZE] not in short_words:
+                short_words[word[:PREFIX_SIZE]] = word
+                if len(short_words) >= wordlist_size:
+                    break
+        return list(short_words.values())
+
+    distinct_wordlist: list[str] = []
+    max_similarity = 0.75
     for word in wordfreq.iter_wordlist("en"):
         if not set(word).issubset(string.ascii_lowercase):
             continue
-        if len(word) >= PREFIX_SIZE and word[:PREFIX_SIZE] not in short_words:
-            short_words[word[:PREFIX_SIZE]] = word
-            if len(short_words) >= wordlist_size:
-                break
-    return list(short_words.values())
+        similar = difflib.get_close_matches(word, distinct_wordlist, 1, max_similarity)
+        if similar:
+            continue
+        distinct_wordlist.append(word)
+        if len(distinct_wordlist) >= wordlist_size:
+            break
+    return distinct_wordlist
 
 
 def to_base_n(
@@ -89,13 +104,13 @@ def to_base_n(
     )
 
 
-def print_diceware(dice: int = 6, rolls: int = 4) -> None:
+def print_diceware(dice: int = 6, rolls: int = 4, unique_prefix: bool = False) -> None:
     """
     Print a table for manually rolling a random word.
 
     This is not the exact wordlist used for this script.
     """
-    wordlist = sorted(get_wordlist(dice**rolls))
+    wordlist = sorted(get_wordlist(dice**rolls, unique_prefix))
     for i, word in enumerate(wordlist):
         numerals = "1234567890ET"[:dice]
         number = to_base_n(i, dice, numerals).rjust(rolls, numerals[0])
@@ -156,12 +171,20 @@ def main(
         typer.Option("-p", "--phrases", help="Number of passphrases to generate"),
     ] = 8,
     *,
+    unique_prefix: Annotated[
+        bool,
+        typer.Option(
+            "--prefix/--no-prefix",
+            "-x/-X",
+            help="Use wordlist with unique 3 letter prefixes",
+        ),
+    ] = False,
     show_entropy: Annotated[
         bool,
         typer.Option(
             "--entropy/--no-entropy",
             "-e/-E",
-            help="Hide entropy calculation information",
+            help="Show entropy calculation information",
         ),
     ] = True,
     show_short_version: Annotated[
@@ -182,7 +205,7 @@ def main(
     ] = 10,
 ) -> None:
     """Generate multiple passphrases and optionally display entropy information."""
-    wordlist = sorted(get_wordlist(2**wordlist_bits))
+    wordlist = sorted(get_wordlist(2**wordlist_bits, unique_prefix=unique_prefix))
     choices = len(wordlist) ** k
     if show_entropy:
         print_entropy_data(choices)
